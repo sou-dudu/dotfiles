@@ -1,0 +1,4 @@
+# Paths are relative to $HOME unless absolute. One repository root per line.
+Knowledge/bot-polymarket
+Knowledge/agent-kit
+Knowledge/dotfiles

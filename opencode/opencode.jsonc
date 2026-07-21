@@ -1,0 +1,215 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openai/gpt-5.6-sol",
+  "small_model": "openai/gpt-5.4-mini",
+  "default_agent": "build",
+  "share": "disabled",
+  "autoupdate": "notify",
+  "snapshot": true,
+  "subagent_depth": 1,
+  "instructions": [
+    "~/.config/opencode/instructions/core.md"
+  ],
+  "skills": {
+    "paths": [
+      "~/.local/share/agent-kit/skills"
+    ]
+  },
+  "agent": {
+    "build": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 60
+    },
+    "plan": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 40,
+      "permission": {
+        "edit": "deny"
+      }
+    },
+    "general": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 40
+    },
+    "explore": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 24,
+      "permission": {
+        "edit": "deny"
+      }
+    },
+    "coordinator": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 40
+    },
+    "decision-auditor": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0,
+      "steps": 12
+    },
+    "researcher": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0.1,
+      "steps": 24
+    },
+    "reviewer": {
+      "model": "openai/gpt-5.6-sol",
+      "temperature": 0,
+      "steps": 20
+    }
+  },
+  "permission": {
+    "read": {
+      "*": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow",
+      "**/*credentials*": "deny",
+      "**/*secret*": "deny",
+      "**/.npmrc": "deny",
+      "**/.netrc": "deny",
+      "**/.pypirc": "deny",
+      "**/*.key": "deny",
+      "**/*.pem": "deny",
+      "**/*.p12": "deny",
+      "**/*.pfx": "deny",
+      "**/id_ed25519*": "deny",
+      "**/id_rsa*": "deny",
+      "**/id_ecdsa*": "deny",
+      "**/*wallet*.json": "deny",
+      "~/.ssh/**": "deny",
+      "~/.aws/**": "deny",
+      "~/.config/gh/**": "deny",
+      "~/.hermes/**": "deny"
+    },
+    "edit": {
+      "*": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow",
+      "**/*credentials*": "deny",
+      "**/*secret*": "deny",
+      "**/.npmrc": "deny",
+      "**/.netrc": "deny",
+      "**/.pypirc": "deny",
+      "**/*.key": "deny",
+      "**/*.pem": "deny",
+      "**/*.p12": "deny",
+      "**/*.pfx": "deny",
+      "**/id_ed25519*": "deny",
+      "**/id_rsa*": "deny",
+      "**/id_ecdsa*": "deny",
+      "**/*wallet*.json": "deny",
+      "~/.ssh/**": "deny",
+      "~/.aws/**": "deny",
+      "~/.config/gh/**": "deny",
+      "~/.hermes/**": "deny"
+    },
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git show*": "allow",
+      "git add*": "allow",
+      "git commit*": "allow",
+      "git stash*": "allow",
+      "git switch*": "allow",
+      "git fetch*": "allow",
+      "git pull --ff-only*": "allow",
+      "git worktree list*": "allow",
+      "git worktree add*": "allow",
+      "gh pr create*": "allow",
+      "gh pr view*": "allow",
+      "gh pr checks*": "allow",
+      "gh pr diff*": "allow",
+      "gh issue list*": "allow",
+      "gh issue view*": "allow",
+      "gh run list*": "allow",
+      "gh run view*": "allow",
+      "gh run watch*": "allow",
+      "pytest*": "allow",
+      "python -m pytest*": "allow",
+      "python3 -m pytest*": "allow",
+      "uv run pytest*": "allow",
+      "uv run --python * pytest*": "allow",
+      "uv sync*": "allow",
+      "uv lock*": "allow",
+      "make test*": "allow",
+      "make check*": "allow",
+      "make lint*": "allow",
+      "make fmt*": "allow",
+      "ruff *": "allow",
+      "mypy *": "allow",
+      "npm test*": "allow",
+      "npm run test*": "allow",
+      "npm run lint*": "allow",
+      "npm run format*": "allow",
+      "npm run build*": "allow",
+      "pnpm test*": "allow",
+      "pnpm lint*": "allow",
+      "pnpm build*": "allow",
+      "bun test*": "allow",
+      "cargo test*": "allow",
+      "cargo check*": "allow",
+      "cargo fmt*": "allow",
+      "cargo clippy*": "allow",
+      "go test*": "allow",
+      "gh pr merge*": "ask",
+      "rm *": "deny",
+      "sudo *": "deny",
+      "ssh *": "deny",
+      "scp *": "deny",
+      "rsync *": "deny",
+      "launchctl *": "deny",
+      "kill *": "deny",
+      "pkill *": "deny",
+      "chmod *": "deny",
+      "chown *": "deny",
+      "env": "deny",
+      "env *": "deny",
+      "printenv*": "deny",
+      "bash -c *": "deny",
+      "sh -c *": "deny",
+      "gh workflow run*": "deny",
+      "gh secret*": "deny",
+      "docker compose up*": "deny",
+      "docker restart*": "deny",
+      "kubectl apply*": "deny",
+      "terraform apply*": "deny"
+    },
+    "external_directory": {
+      "*": "deny",
+      "~/.local/share/agent-kit/**": "allow",
+      "~/Knowledge/**": "allow"
+    },
+    "task": "allow",
+    "webfetch": "ask",
+    "websearch": "ask",
+    "skill": {
+      "*": "deny",
+      "delegation-workflow": "allow",
+      "repo-audit": "allow",
+      "incident-triage": "allow",
+      "hypothesis-test": "allow",
+      "release-check": "allow",
+      "policy-audit": "allow",
+      "customize-opencode": "allow"
+    },
+    "doom_loop": "deny"
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "tail_turns": 8
+  },
+  "tool_output": {
+    "max_lines": 1000,
+    "max_bytes": 30000
+  }
+}

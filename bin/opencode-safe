@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+trust_file="${OPENCODE_TRUST_FILE:-$HOME/.config/opencode/trusted-projects}"
+candidate=$PWD
+
+if [ "$#" -gt 0 ] && [ -d "$1" ]; then
+  candidate=$1
+fi
+
+candidate=$(cd "$candidate" && pwd -P)
+if project_root=$(git -C "$candidate" rev-parse --show-toplevel 2>/dev/null); then
+  candidate=$(cd "$project_root" && pwd -P)
+fi
+
+trusted=false
+if [ -f "$trust_file" ]; then
+  while IFS= read -r entry || [ -n "$entry" ]; do
+    case "$entry" in
+      ""|\#*) continue ;;
+      /*) trusted_path=$entry ;;
+      *) trusted_path=$HOME/$entry ;;
+    esac
+
+    if [ -d "$trusted_path" ]; then
+      trusted_path=$(cd "$trusted_path" && pwd -P)
+      if [ "$candidate" = "$trusted_path" ]; then
+        trusted=true
+        break
+      fi
+    fi
+  done < "$trust_file"
+fi
+
+if [ "$trusted" = true ]; then
+  printf 'OpenCode policy: trusted project configuration enabled for %s\n' "$candidate" >&2
+else
+  export OPENCODE_DISABLE_PROJECT_CONFIG=1
+  export OPENCODE_DISABLE_EXTERNAL_SKILLS=1
+  export OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1
+  printf 'OpenCode policy: project configuration disabled for %s\n' "$candidate" >&2
+fi
+
+exec opencode "$@"
