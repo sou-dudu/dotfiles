@@ -3,19 +3,55 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
+import stat
 import subprocess
 import sys
 from pathlib import Path
 
+from agent_kit_lock import LockValidationError, validate_agent_kit
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "opencode" / "opencode.jsonc"
-AGENT_KIT = ROOT.parent / "agent-kit"
+DEFAULT_AGENT_KIT = ROOT.parent / "agent-kit"
+
+
+def tracked_files() -> list[Path]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+    )
+    if result.returncode:
+        raise RuntimeError("could not enumerate tracked files for secret scan")
+    return [ROOT / item.decode() for item in result.stdout.split(b"\0") if item]
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--agent-kit",
+        type=Path,
+        default=Path(os.environ.get("AGENT_KIT_HOME", DEFAULT_AGENT_KIT)),
+        help="agent-kit repository to validate",
+    )
+    parser.add_argument("--lock", type=Path, help="lock required for the selected agent-kit")
+    parser.add_argument(
+        "--target-home",
+        type=Path,
+        help="absolute staging home used for a locked installation preview",
+    )
+    parser.add_argument(
+        "--source-only",
+        action="store_true",
+        help="skip effective-agent inspection before staging links are installed",
+    )
+    args = parser.parse_args()
+    agent_kit = args.agent_kit.expanduser().resolve()
     failures: list[str] = []
 
     try:
@@ -70,8 +106,17 @@ def main() -> int:
         "API" + "_KEY=",
         "TOK" + "EN=",
     )
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".git" in path.parts or "__pycache__" in path.parts:
+    try:
+        scan_paths = tracked_files()
+    except RuntimeError as error:
+        failures.append(str(error))
+        scan_paths = []
+    for path in scan_paths:
+        try:
+            mode = path.lstat().st_mode
+        except FileNotFoundError:
+            continue
+        if stat.S_ISLNK(mode) or not stat.S_ISREG(mode):
             continue
         try:
             text = path.read_text(encoding="utf-8")
@@ -81,23 +126,61 @@ def main() -> int:
             if marker in text:
                 failures.append(f"possible secret marker in {path.relative_to(ROOT)}")
 
-    checks = (
+    if args.lock:
+        try:
+            validate_agent_kit(agent_kit, args.lock)
+        except LockValidationError as error:
+            failures.append(str(error))
+
+    install_check = [
+        sys.executable,
+        str(ROOT / "scripts" / "install.py"),
+        "--agent-kit",
+        str(agent_kit),
+    ]
+    if args.lock:
+        if args.target_home is None:
+            failures.append("locked validation requires an explicit --target-home")
+        else:
+            install_check.extend(
+                (
+                    "--lock",
+                    str(args.lock.expanduser().resolve()),
+                    "--target-home",
+                    str(args.target_home.expanduser()),
+                )
+            )
+    checks = [
         (["sh", "-n", str(ROOT / "bin" / "opencode-safe")], ROOT),
-        ([sys.executable, str(ROOT / "scripts" / "install.py")], ROOT),
-        ([sys.executable, str(AGENT_KIT / "scripts" / "validate.py")], AGENT_KIT),
-    )
+        (install_check, ROOT),
+    ]
+    if not args.lock:
+        checks.append(([sys.executable, str(agent_kit / "scripts" / "validate.py")], agent_kit))
     for command, cwd in checks:
         result = subprocess.run(command, cwd=cwd, check=False)
         if result.returncode:
             failures.append(f"check failed: {' '.join(command)}")
 
     resolved_agents = {
-        "build": "primary",
         "coordinator": "primary",
+        "explorer": "subagent",
+        "implementer": "subagent",
+        "reviewer": "subagent",
+        "tester": "subagent",
+        "researcher": "subagent",
+        "ops-observer": "subagent",
         "decision-auditor": "subagent",
     }
+    if args.source_only:
+        resolved_agents = {}
     for agent_name, expected_mode in resolved_agents.items():
         environment = os.environ.copy()
+        if args.target_home is not None:
+            environment["HOME"] = str(args.target_home.expanduser())
+            environment.pop("XDG_CONFIG_HOME", None)
+            environment.pop("XDG_DATA_HOME", None)
+            environment.pop("OPENCODE_CONFIG", None)
+            environment.pop("OPENCODE_CONFIG_CONTENT", None)
         environment["OPENCODE_DISABLE_PROJECT_CONFIG"] = "1"
         result = subprocess.run(
             ["opencode", "debug", "agent", agent_name],
@@ -122,15 +205,24 @@ def main() -> int:
 
         permissions = resolved.get("permission", [])
         if agent_name == "decision-auditor":
-            required_denials = {"edit", "bash", "task", "webfetch"}
-            effective: dict[str, str] = {}
-            for rule in permissions:
-                if rule.get("pattern") == "*":
-                    effective[rule.get("permission", "")] = rule.get("action", "")
+            required_denials = {
+                "edit",
+                "bash",
+                "task",
+                "external_directory",
+                "webfetch",
+                "websearch",
+            }
             for permission_name in required_denials:
-                if effective.get(permission_name) != "deny":
+                matching = [
+                    rule
+                    for rule in permissions
+                    if rule.get("permission") == permission_name
+                ]
+                if not matching or any(rule.get("action") != "deny" for rule in matching):
                     failures.append(
-                        f"decision-auditor must resolve {permission_name} as denied"
+                        "decision-auditor must resolve every "
+                        f"{permission_name} rule as denied"
                     )
 
     if failures:

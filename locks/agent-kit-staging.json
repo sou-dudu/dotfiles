@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "activation_enabled": false,
+  "repository": "github.com/sou-dudu/agent-kit",
+  "commit": "9978975ae33926d9652bbbbd2df2b0df261b12df",
+  "tree": "34bd07654465153ba809a384ae2fec3eac053655",
+  "tracked_tree_sha256": "736d5cab96371c978ebc984c8050ed5998f3cbca0b5739d8f9f18bfdeed29aa5",
+  "required_sources": [
+    "adapters/opencode/agents",
+    "policies/role-permissions.json",
+    "roles",
+    "schemas/project-capabilities.schema.json",
+    "scripts/generate_adapters.py",
+    "scripts/validate.py",
+    "skills"
+  ]
+}
