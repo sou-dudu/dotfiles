@@ -28,6 +28,8 @@ python3 scripts/install.py --apply
 
 The installer backs up conflicting files instead of deleting them. It does not
 touch OpenCode's package files, plugins, authentication store, or provider state.
+For the separately approved staging workflow, use the pinned validation and
+activation procedure in [`docs/staging-agent-kit.md`](docs/staging-agent-kit.md).
 
 After installation, launch OpenCode through:
 
