@@ -30,3 +30,16 @@ The leader is `Ctrl+Space`, followed by a letter:
 | `r` | reload configuration |
 
 They are letters only, so they behave the same on US and Spanish keyboards.
+
+## Prompt
+
+[Starship](https://starship.rs) draws the prompt: the working directory (shortened
+to the repository root), the Git branch and status, and the version of a tool
+when a project uses it. Its configuration is `starship/starship.toml`, linked to
+`~/.config/starship.toml` by `make shell`; `zsh/zshrc` turns it on when
+`starship` is installed.
+
+Icons come from a Nerd Font symbol set, which WezTerm bundles as a fallback, so
+no extra font is needed there. Other terminals need a Nerd Font.
+
+To try a change, edit the file and open a new terminal.

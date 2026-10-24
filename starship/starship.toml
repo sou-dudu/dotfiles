@@ -1,0 +1,40 @@
+# Starship prompt. Linked to ~/.config/starship.toml by scripts/install_shell.py.
+# Icons need a Nerd Font symbol set; WezTerm bundles one as a fallback.
+
+add_newline = true
+
+# Show the working directory, shortened to the last three folders, and the
+# repository root when inside one.
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+style = "bold cyan"
+read_only = " 󰌾"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+
+[cmd_duration]
+min_time = 3000
+format = "took [$duration]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+# Keep the prompt quiet: only show tools when a project actually uses them.
+[nodejs]
+symbol = " "
+[python]
+symbol = " "
+[golang]
+symbol = " "
+[terraform]
+symbol = "󱁢 "
+[kubernetes]
+disabled = true

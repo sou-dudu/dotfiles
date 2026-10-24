@@ -8,6 +8,7 @@ reproducible on a new machine with one command.
 | Tool | Why |
 |---|---|
 | **WezTerm** | One config file that works on macOS and Windows, with built-in panes and tabs. [Details](docs/terminal.md) |
+| **Starship** | One prompt config for zsh and PowerShell: shortened path, Git branch and status, icons. [Details](docs/terminal.md) |
 | **WSL** | Gives Windows the same Linux shell, Git and tools as the Mac. |
 | **Homebrew** | One `Brewfile` lists every package, so a new Mac installs in one step. |
 | **Git + GitHub CLI** | Version control and pull requests from the terminal. |

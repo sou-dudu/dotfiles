@@ -10,6 +10,9 @@ dotfiles_zsh="${${(%):-%x}:A:h}"
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# Prompt (path, Git status, icons), configured in starship/starship.toml.
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
 unset dotfiles_zsh
 
 [ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
