@@ -1,6 +1,20 @@
-# Shared Git settings. Linked to ~/.config/git/config, which Git reads in
-# addition to ~/.gitconfig. Identity (name, email) stays in ~/.gitconfig, which
-# is never tracked, so the same file works for personal and work machines.
+# Shared Git settings. Linked to ~/.config/git/config, which Git reads before
+# ~/.gitconfig (so anything in ~/.gitconfig overrides this file).
+#
+# Identity is never stored here. It lives in two local, untracked files, created
+# from git/identity-*.example, so the same file works on every machine.
+
+[user]
+	# Refuse to commit without an identity instead of guessing one from the
+	# hostname. Without a matching file below, Git stops and asks.
+	useConfigOnly = true
+
+# Default identity, then the work identity for repositories under ~/work. The
+# later include wins, so the order matters.
+[include]
+	path = ~/.config/git/identity-personal
+[includeIf "gitdir:~/work/"]
+	path = ~/.config/git/identity-work
 
 [init]
 	defaultBranch = main

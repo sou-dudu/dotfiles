@@ -1,0 +1,5 @@
+# Copy to ~/.config/git/identity-work and fill in. Never commit the copy.
+# Applies to every repository under ~/work.
+[user]
+	name = Your Name
+	email = your.name@company.example

@@ -62,6 +62,16 @@ for installer in install_wezterm.py install_skills.py install_shell.py; do
   fi
 done
 
+echo "== Git identity"
+for identity in personal work; do
+  identity_file="$HOME/.config/git/identity-$identity"
+  if [ -f "$identity_file" ]; then
+    echo "OK    $identity_file"
+  else
+    echo "TODO  create $identity_file from git/identity-$identity.example"
+  fi
+done
+
 echo "== WezTerm icon"
 wezterm_app="/Applications/WezTerm.app"
 if [ ! -d "$wezterm_app" ]; then
