@@ -56,7 +56,36 @@ switch to matching on the remote URL, which needs Git 2.36 or newer:
 	path = ~/.config/git/identity-work
 ```
 
+## Credentials
+
+GitHub over HTTPS authenticates with the GitHub CLI token, so Git and `gh` share
+one credential and nothing else is stored:
+
+```ini
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+```
+
+The empty `helper =` clears the `osxkeychain` helper that Homebrew's Git enables
+system-wide. That helper ties the stored password to the Git binary, so macOS can
+ask for the login keychain password again after every `brew upgrade git`.
+
+Set it up once per machine, including inside WSL:
+
+```bash
+gh auth login
+```
+
+Check it without any prompt (it must list refs of a repository you can access):
+
+```bash
+GIT_TERMINAL_PROMPT=0 git ls-remote origin
+```
+
+An old `github.com` entry may remain in the macOS keychain; it is no longer used
+and can be deleted from Keychain Access.
+
 ## Not covered here
 
-Per-identity SSH keys and commit signing. The credential helper is a separate,
-open item.
+Per-identity SSH keys and commit signing.

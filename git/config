@@ -16,6 +16,14 @@
 [includeIf "gitdir:~/work/"]
 	path = ~/.config/git/identity-work
 
+# GitHub over HTTPS uses the GitHub CLI token (`gh auth login`), so Git and gh
+# share one credential. The empty `helper =` first clears helpers inherited from
+# the system config (Homebrew's Git sets osxkeychain), which would otherwise run
+# before this one and can prompt after every Git upgrade.
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+
 [init]
 	defaultBranch = main
 
