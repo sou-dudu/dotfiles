@@ -51,7 +51,8 @@ These are deliberately not scripted: they involve credentials, and this
 repository never stores credential values.
 
 - [ ] Sign in to 1Password and enable its CLI integration.
-- [ ] `gh auth login`
+- [ ] `gh auth login`: Git uses this token for GitHub over HTTPS, so there is no
+      separate credential to set up (see [git.md](git.md)).
 - [ ] Sign in to Tailscale (needed to reach this Mac from the iPhone).
 - [ ] Sign in to OpenCode providers; the authentication store stays outside Git.
 - [ ] Create `~/.config/git/identity-personal` (and `identity-work` on a work
