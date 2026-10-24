@@ -11,7 +11,7 @@ reproducible on a new machine with one command.
 | **Starship** | One prompt config for zsh and PowerShell: shortened path, Git branch and status, icons. [Details](docs/terminal.md) |
 | **WSL** | Gives Windows the same Linux shell, Git and tools as the Mac. |
 | **Homebrew** | One `Brewfile` lists every package, so a new Mac installs in one step. |
-| **Git + GitHub CLI** | Version control and pull requests from the terminal. |
+| **Git + GitHub CLI** | Version control and pull requests from the terminal, with separate personal and work identities. [Details](docs/git.md) |
 | **OpenCode** | AI agent in the terminal, with a local permission policy and a safe launcher. [Details](docs/opencode.md) |
 | **Shared skills** | One `skills/` folder linked into Claude Code and OpenCode, so changing tool costs nothing; includes the commit-message convention. [Details](docs/ai-agents.md) |
 | **Xcode + SwiftLint** | iOS app development, kept in a separate `Brewfile.ios` so it never affects other setups. [Details](docs/ios.md) |

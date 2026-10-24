@@ -34,8 +34,7 @@ already has some of them, `--apply` also upgrades the outdated ones. Existing fi
 
 This installs the `Brewfile` and links the WezTerm, skills, zsh and Git
 configuration. An existing `~/.zshrc` is moved aside as `~/.zshrc.backup-<date>`.
-Your Git identity stays in `~/.gitconfig`, which is not tracked: set it with
-`git config --global user.name` and `user.email`.
+Your Git identity is not in the repository: see [git.md](git.md).
 
 ### Apps already installed by hand
 
@@ -55,6 +54,8 @@ repository never stores credential values.
 - [ ] `gh auth login`
 - [ ] Sign in to Tailscale (needed to reach this Mac from the iPhone).
 - [ ] Sign in to OpenCode providers; the authentication store stays outside Git.
+- [ ] Create `~/.config/git/identity-personal` (and `identity-work` on a work
+      machine) from the examples in `git/`; see [git.md](git.md).
 - [ ] Add the machine's SSH key to GitHub. Generate a new key per machine.
 - [ ] For `--ios`, sign in to the App Store first: `mas` installs Xcode with
       your Apple ID.

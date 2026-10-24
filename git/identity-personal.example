@@ -1,0 +1,6 @@
+# Copy to ~/.config/git/identity-personal and fill in. Never commit the copy.
+# Use the GitHub noreply address to keep your real email out of public commits:
+#   <numeric-id>+<username>@users.noreply.github.com
+[user]
+	name = Your Name
+	email = 12345678+your-username@users.noreply.github.com
