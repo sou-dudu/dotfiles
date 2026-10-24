@@ -4,20 +4,24 @@ set -eu
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 APPLY=0
+IOS=0
 
-case "${1:-}" in
-  "") ;;
-  --apply) APPLY=1 ;;
-  -h | --help)
-    echo "usage: bootstrap.sh [--apply]"
-    echo "Without --apply, only shows what would change."
-    exit 0
-    ;;
-  *)
-    echo "ERROR: unknown argument: $1" >&2
-    exit 2
-    ;;
-esac
+for argument in "$@"; do
+  case "$argument" in
+    --apply) APPLY=1 ;;
+    --ios) IOS=1 ;;
+    -h | --help)
+      echo "usage: bootstrap.sh [--apply] [--ios]"
+      echo "Without --apply, only shows what would change."
+      echo "--ios also covers the iOS development tools (Brewfile.ios)."
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $argument" >&2
+      exit 2
+      ;;
+  esac
+done
 
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "ERROR: bootstrap.sh targets macOS only." >&2
@@ -30,20 +34,29 @@ if ! command -v brew >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "== Homebrew packages (Brewfile)"
-if [ "$APPLY" -eq 1 ]; then
-  brew bundle --file="$ROOT/Brewfile"
-else
-  # `check` exits non-zero when something is missing; that is not an error here.
-  brew bundle check --file="$ROOT/Brewfile" --verbose || true
+brewfiles=("$ROOT/Brewfile")
+if [ "$IOS" -eq 1 ]; then
+  brewfiles+=("$ROOT/Brewfile.ios")
 fi
 
-echo "== WezTerm configuration"
-if [ "$APPLY" -eq 1 ]; then
-  python3 "$ROOT/scripts/install_wezterm.py" --apply
-else
-  python3 "$ROOT/scripts/install_wezterm.py"
-fi
+for brewfile in "${brewfiles[@]}"; do
+  echo "== Homebrew packages ($(basename "$brewfile"))"
+  if [ "$APPLY" -eq 1 ]; then
+    brew bundle --file="$brewfile"
+  else
+    # `check` exits non-zero when something is missing; that is not an error here.
+    brew bundle check --file="$brewfile" --verbose || true
+  fi
+done
+
+for installer in install_wezterm.py install_skills.py; do
+  echo "== ${installer%.py}"
+  if [ "$APPLY" -eq 1 ]; then
+    python3 "$ROOT/scripts/$installer" --apply
+  else
+    python3 "$ROOT/scripts/$installer"
+  fi
+done
 
 if [ "$APPLY" -eq 1 ]; then
   echo
