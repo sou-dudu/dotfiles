@@ -62,6 +62,19 @@ for installer in install_wezterm.py install_skills.py install_shell.py; do
   fi
 done
 
+echo "== WezTerm icon"
+wezterm_app="/Applications/WezTerm.app"
+if [ ! -d "$wezterm_app" ]; then
+  echo "SKIP  WezTerm is not installed"
+elif ! command -v fileicon >/dev/null 2>&1; then
+  echo "SKIP  fileicon is not installed (it comes with the Brewfile)"
+elif [ "$APPLY" -eq 1 ]; then
+  # A WezTerm upgrade restores the original icon; run this again to re-apply.
+  fileicon set "$wezterm_app" "$ROOT/wezterm/icon.icns" || failed=1
+else
+  echo "ICON  $wezterm_app <- $ROOT/wezterm/icon.icns"
+fi
+
 if [ "$failed" -eq 1 ]; then
   echo
   echo "ERROR: some steps failed; see the output above. The rest was applied." >&2

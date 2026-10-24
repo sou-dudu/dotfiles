@@ -11,6 +11,17 @@ make wezterm           # create ~/.config/wezterm/wezterm.lua
 Where this repository cannot be cloned (the work PC), copy the file to
 `%USERPROFILE%\.config\wezterm\wezterm.lua`.
 
+## Icon
+
+The icon is a cat in a terminal window: `wezterm/icon.svg` is the source and
+`wezterm/icon.icns` the result. `./bootstrap.sh --apply` sets it on
+`/Applications/WezTerm.app` with `fileicon`. A WezTerm upgrade restores the
+original icon, so run the bootstrap again to re-apply it. The Dock may need
+`killall Dock` to show the change.
+
+To change the design, edit the SVG and run `make wezterm-icon` to rebuild the
+`.icns` (needs `swift`, from the Command Line Tools).
+
 ## Shortcuts
 
 The leader is `Ctrl+Space`, followed by a letter:
