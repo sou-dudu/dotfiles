@@ -32,7 +32,19 @@ already has some of them, `--apply` also upgrades the outdated ones. Existing fi
 ./bootstrap.sh --apply
 ```
 
-This installs the `Brewfile` and links `~/.config/wezterm/wezterm.lua`.
+This installs the `Brewfile` and links the WezTerm, skills, zsh and Git
+configuration. An existing `~/.zshrc` is moved aside as `~/.zshrc.backup-<date>`.
+Your Git identity stays in `~/.gitconfig`, which is not tracked: set it with
+`git config --global user.name` and `user.email`.
+
+### Apps already installed by hand
+
+`brew bundle` refuses to overwrite an app that was installed outside Homebrew.
+On a Mac that already has them, let Homebrew take ownership once:
+
+```bash
+brew install --cask --adopt claude google-chrome obsidian telegram vlc
+```
 
 ## 4. Manual steps
 
@@ -44,6 +56,8 @@ repository never stores credential values.
 - [ ] Sign in to Tailscale (needed to reach this Mac from the iPhone).
 - [ ] Sign in to OpenCode providers; the authentication store stays outside Git.
 - [ ] Add the machine's SSH key to GitHub. Generate a new key per machine.
+- [ ] For `--ios`, sign in to the App Store first: `mas` installs Xcode with
+      your Apple ID.
 - [ ] Set the keyboard layout and remap Caps Lock to Escape/Ctrl in System
       Settings.
 
@@ -52,7 +66,7 @@ repository never stores credential values.
 - OpenCode policy links (`scripts/install.py`) need the sibling `agent-kit`
   checkout and are installed separately, following
   [staging-agent-kit.md](staging-agent-kit.md).
-- Shell, tmux, git and editor configuration are not in the repository yet.
+- tmux and editor configuration are not in the repository yet.
 
 ## Work PC (Windows)
 

@@ -8,7 +8,6 @@ tap "anomalyco/tap"
 brew "git"
 brew "gh"
 brew "tmux"
-brew "ripgrep"
 brew "jq"
 brew "yq"
 brew "tree"
@@ -30,16 +29,15 @@ brew "pyenv"
 # Utilities
 brew "p7zip"
 brew "poppler"
+brew "nmap"      # network troubleshooting
 
 # Applications
 cask "wezterm"
 cask "visual-studio-code"
 cask "1password-cli"
-
-# Optional: heavy or specific to one machine. Uncomment when needed.
-# brew "nmap"
-# brew "openai-whisper"   # pulls in PyTorch, several GB
-# brew "xcodegen"
-# brew "hudochenkov/sshpass/sshpass"
-# brew "steipete/tap/wacli"
-# cask "rar"
+cask "claude"
+cask "google-chrome"
+cask "obsidian"
+cask "telegram"
+cask "vlc"
+cask "rar"

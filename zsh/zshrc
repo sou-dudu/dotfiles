@@ -1,0 +1,15 @@
+# Interactive zsh configuration. Linked to ~/.zshrc by scripts/install_shell.py.
+# Machine-specific or private settings go in ~/.zshrc.local, which is never
+# tracked.
+
+# Directory of this file, even when reached through the ~/.zshrc symlink.
+dotfiles_zsh="${${(%):-%x}:A:h}"
+
+# Welcome banner.
+[ -r "$dotfiles_zsh/welcome.zsh" ] && source "$dotfiles_zsh/welcome.zsh"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+unset dotfiles_zsh
+
+[ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

@@ -6,7 +6,7 @@ are unaffected.
 
 ## Xcode
 
-Install Xcode from the App Store, then point the command line tools at it. This
+`./bootstrap.sh --ios --apply` installs Xcode through `mas` (sign in to the App Store first; it is a very large download). Or install it from the App Store by hand. Then point the command line tools at it. This
 asks for your password, so it is a manual step:
 
 ```bash
