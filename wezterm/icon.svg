@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <title>WezTerm cat icon</title>
+
+  <!-- Terminal window, using the Tokyo Night palette of the WezTerm theme. -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="#1a1b26"/>
+  <rect x="103" y="103" width="818" height="818" rx="182" fill="none" stroke="#414868" stroke-width="6"/>
+
+  <!-- Window buttons -->
+  <circle cx="200" cy="190" r="22" fill="#f7768e"/>
+  <circle cx="262" cy="190" r="22" fill="#e0af68"/>
+  <circle cx="324" cy="190" r="22" fill="#9ece6a"/>
+
+  <!-- Whiskers -->
+  <g stroke="#565f89" stroke-width="10" stroke-linecap="round">
+    <line x1="318" y1="625" x2="228" y2="605"/>
+    <line x1="322" y1="655" x2="232" y2="670"/>
+    <line x1="706" y1="625" x2="796" y2="605"/>
+    <line x1="702" y1="655" x2="792" y2="670"/>
+  </g>
+
+  <!-- Ears -->
+  <g stroke="#c0caf5" stroke-width="34" stroke-linejoin="round" fill="#c0caf5">
+    <polygon points="318,455 336,285 460,390"/>
+    <polygon points="706,455 688,285 564,390"/>
+  </g>
+  <g fill="#f7768e" opacity="0.75">
+    <polygon points="350,410 358,334 418,384"/>
+    <polygon points="674,410 666,334 606,384"/>
+  </g>
+
+  <!-- Head -->
+  <ellipse cx="512" cy="580" rx="236" ry="190" fill="#c0caf5"/>
+
+  <!-- Eyes with highlights -->
+  <ellipse cx="430" cy="575" rx="27" ry="40" fill="#1a1b26"/>
+  <ellipse cx="594" cy="575" rx="27" ry="40" fill="#1a1b26"/>
+  <circle cx="440" cy="558" r="10" fill="#ffffff"/>
+  <circle cx="604" cy="558" r="10" fill="#ffffff"/>
+
+  <!-- Blush, nose and mouth -->
+  <ellipse cx="368" cy="640" rx="38" ry="22" fill="#f7768e" opacity="0.55"/>
+  <ellipse cx="656" cy="640" rx="38" ry="22" fill="#f7768e" opacity="0.55"/>
+  <path d="M492 622 h40 l-20 24 z" fill="#f7768e" stroke="#f7768e" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M512 648 q-22 30 -50 14 M512 648 q22 30 50 14" fill="none" stroke="#1a1b26" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- Prompt: chevron and cursor -->
+  <polyline points="186,812 238,846 186,880" fill="none" stroke="#9ece6a" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="268" y="868" width="64" height="20" rx="10" fill="#9ece6a"/>
+</svg>

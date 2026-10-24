@@ -13,6 +13,7 @@ brew "jq"
 brew "yq"
 brew "tree"
 brew "watch"
+brew "fileicon"  # sets the custom WezTerm icon
 
 # Agents
 brew "anomalyco/tap/opencode"
