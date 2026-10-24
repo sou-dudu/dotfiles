@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link the zsh and Git configuration, with a dry-run default."""
+"""Link the zsh, Git and Starship configuration, with a dry-run default."""
 
 from __future__ import annotations
 
@@ -19,6 +19,10 @@ def main() -> int:
     links = (
         (ROOT / "zsh" / "zshrc", target_home / ".zshrc"),
         (ROOT / "git" / "config", target_home / ".config" / "git" / "config"),
+        (
+            ROOT / "starship" / "starship.toml",
+            target_home / ".config" / "starship.toml",
+        ),
     )
 
     try:

@@ -8,6 +8,7 @@ tap "anomalyco/tap"
 brew "git"
 brew "gh"
 brew "tmux"
+brew "starship"  # shell prompt, configured in starship/starship.toml
 brew "jq"
 brew "yq"
 brew "tree"
