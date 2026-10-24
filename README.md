@@ -48,3 +48,22 @@ make check
 ```
 
 Configuration changes require quitting and restarting OpenCode.
+
+## Terminal
+
+`wezterm/wezterm.lua` is a single self-contained WezTerm configuration for
+macOS and Windows. On Windows it opens the first WSL distribution by default.
+
+```bash
+make wezterm-preview   # show the link that would be created
+make wezterm           # create ~/.config/wezterm/wezterm.lua
+```
+
+Where this repository cannot be cloned (the work PC), copy the file to
+`%USERPROFILE%\.config\wezterm\wezterm.lua`.
+
+Shortcuts use the leader `Ctrl+Space`, followed by a letter: `s`/`v` split,
+`h j k l` move between panes, `z` zoom, `x` close, `c` new tab, `n`/`p`
+switch tabs, `1`-`9` jump to a tab, `y` copy mode, `f` search, `o` launcher,
+`r` reload. They are letters only, so they behave the same on US and Spanish
+keyboards.
