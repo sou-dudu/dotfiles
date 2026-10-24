@@ -53,7 +53,7 @@ for brewfile in "${brewfiles[@]}"; do
   fi
 done
 
-for installer in install_wezterm.py install_skills.py; do
+for installer in install_wezterm.py install_skills.py install_shell.py; do
   echo "== ${installer%.py}"
   if [ "$APPLY" -eq 1 ]; then
     python3 "$ROOT/scripts/$installer" --apply || failed=1

@@ -1,0 +1,15 @@
+# Shared Git settings. Linked to ~/.config/git/config, which Git reads in
+# addition to ~/.gitconfig. Identity (name, email) stays in ~/.gitconfig, which
+# is never tracked, so the same file works for personal and work machines.
+
+[init]
+	defaultBranch = main
+
+[pull]
+	ff = only
+
+[push]
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
