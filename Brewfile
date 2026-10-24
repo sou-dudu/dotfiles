@@ -33,7 +33,6 @@ brew "poppler"
 
 # Applications
 cask "wezterm"
-cask "iterm2"
 cask "visual-studio-code"
 cask "1password-cli"
 
