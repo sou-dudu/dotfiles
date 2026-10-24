@@ -1,0 +1,8 @@
+# iOS development tools, kept apart so machines that do not build iOS apps
+# (and the work setup) are unaffected. Installed with `./bootstrap.sh --ios`.
+# Xcode itself comes from the App Store; see docs/ios.md.
+
+brew "xcodegen"   # generate the .xcodeproj from a project.yml
+brew "swiftlint"
+brew "swiftformat"
+brew "xcbeautify" # readable xcodebuild output

@@ -1,4 +1,4 @@
-.PHONY: check check-source test install-preview install wezterm-preview wezterm
+.PHONY: check check-source test install-preview install wezterm-preview wezterm skills-preview skills
 
 check: test
 	python3 scripts/validate.py
@@ -20,3 +20,9 @@ wezterm-preview:
 
 wezterm:
 	python3 scripts/install_wezterm.py --apply
+
+skills-preview:
+	python3 scripts/install_skills.py
+
+skills:
+	python3 scripts/install_skills.py --apply

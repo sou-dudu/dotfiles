@@ -199,7 +199,8 @@
       "hypothesis-test": "allow",
       "release-check": "allow",
       "policy-audit": "allow",
-      "customize-opencode": "allow"
+      "customize-opencode": "allow",
+      "commit-message": "allow"
     },
     "doom_loop": "deny"
   },
